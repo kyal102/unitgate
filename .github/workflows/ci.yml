@@ -2,15 +2,34 @@ name: CI
 on: [push, pull_request]
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ["3.9", "3.12"]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-        with: { python-version: "3.11" }
+        with:
+          python-version: ${{ matrix.python-version }}
       - name: Tests
         run: python -m unittest discover -s tests
       - name: Demo runs
         run: python -m unitgate --demo
+      - name: Valid equation exits 0
+        run: python -m unitgate "F = m * a"
+      - name: Invalid equation exits 1
+        shell: bash
+        run: |
+          if python -m unitgate "E = m * a"; then
+            echo "expected exit code 1 for dimensionally invalid equation"; exit 1
+          fi
+          echo "exit-code contract ok"
+  hygiene:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
       - name: Hygiene — no private imports / secrets / unsafe subprocess
         run: |
           ! grep -rnE "import (app|core|modules)\b|dtl_registry|jarvi3" unitgate/ || (echo "private import" && exit 1)

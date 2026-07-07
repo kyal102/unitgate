@@ -2,7 +2,7 @@
 
 # UnitGate
 
-![CI](https://img.shields.io/badge/CI-passing-brightgreen) ![python](https://img.shields.io/badge/python-3.9%2B-blue) ![license](https://img.shields.io/badge/license-MIT-green) ![deps](https://img.shields.io/badge/dependencies-stdlib--only-blue)
+[![CI](https://github.com/kyal102/unitgate/actions/workflows/ci.yml/badge.svg)](https://github.com/kyal102/unitgate/actions/workflows/ci.yml) ![python](https://img.shields.io/badge/python-3.9%2B-blue) ![license](https://img.shields.io/badge/license-MIT-green) ![deps](https://img.shields.io/badge/dependencies-stdlib--only-blue)
 
 **Catch broken physics equations before they become confident AI claims.**
 
