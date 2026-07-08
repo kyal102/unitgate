@@ -36,7 +36,7 @@ Exit code is `1` for a dimensionally invalid equation (handy in scripts/CI).
 
 > UnitGate checks **dimensional consistency only**. It does not prove physical truth or replace experiment.
 
-It knows the seven SI base dimensions and common derived quantities (force, energy, power, momentum, pressure, charge, voltage, …) and common symbols (`E, F, m, a, v, p, c, P, t, …`). Unknown/ambiguous symbols are reported as `AMBIGUOUS_NEEDS_CLARIFICATION`, never guessed. Sums and parentheses are out of scope (products/quotients only).
+It knows the seven SI base dimensions and common derived quantities (force, energy, power, momentum, pressure, charge, voltage, …) and common symbols (`E, F, m, a, v, p, c, P, t, …`). Unknown/ambiguous symbols are reported as `AMBIGUOUS_NEEDS_CLARIFICATION`, never guessed. Expressions support `* / + -`, parentheses, and integer powers — terms in a sum must share one dimension (`E = ½mv² + mgh` passes; `E = mgh + mv` is flagged with both clashing dimensions). Mathematical functions (sin, exp, log) and non-integer exponents remain out of scope.
 
 See [docs/EXAMPLES.md](docs/EXAMPLES.md) and [docs/LIMITATIONS.md](docs/LIMITATIONS.md).
 

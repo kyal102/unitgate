@@ -6,7 +6,8 @@ import sys
 from .gate import check_equation
 
 DEMO = ["F = m * a", "E = m * a", "E = m * c**2", "p = m * v", "v = d / t",
-        "power = energy / time", "F = m * v"]
+        "power = energy / time", "F = m * v",
+        "E = 0.5*m*v**2 + m*g*h", "E = m*g*h + m*v", "d = v*t + 0.5*a*t**2"]
 
 
 def _print(res, as_json):

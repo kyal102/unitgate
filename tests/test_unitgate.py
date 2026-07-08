@@ -33,6 +33,40 @@ class TestUnitGate(unittest.TestCase):
         self.assertEqual(check_equation("E m a").status, MALFORMED)
         self.assertEqual(check_equation("E = m = a").status, MALFORMED)
 
+    # ── sums, parentheses, unary minus (v0.2 parser) ──
+    def test_kinetic_plus_potential_is_valid(self):
+        self.assertEqual(check_equation("E = 0.5*m*v**2 + m*g*h").status, VALID)
+
+    def test_kinematics_sum_is_valid(self):
+        self.assertEqual(check_equation("d = v*t + 0.5*a*t**2").status, VALID)
+
+    def test_sum_of_unlike_terms_is_invalid(self):
+        r = check_equation("E = m*g*h + m*v")
+        self.assertEqual(r.status, INVALID)
+        self.assertIn("do not share one dimension", r.reason)
+
+    def test_parentheses_are_supported(self):
+        self.assertEqual(check_equation("F = m*(v/t)").status, VALID)
+        self.assertEqual(check_equation("v = (d + d) / t").status, VALID)
+
+    def test_parenthesised_power(self):
+        self.assertEqual(check_equation("E = m*(d/t)**2").status, VALID)
+
+    def test_unary_minus_is_valid(self):
+        self.assertEqual(check_equation("F = -m*a").status, VALID)
+
+    def test_negative_exponent(self):
+        self.assertEqual(check_equation("f = t**-1").status, VALID)
+
+    def test_implicit_multiplication_still_works(self):
+        self.assertEqual(check_equation("F = m a").status, VALID)
+
+    def test_missing_paren_is_malformed(self):
+        self.assertEqual(check_equation("F = m*(v/t").status, MALFORMED)
+
+    def test_non_integer_exponent_is_malformed(self):
+        self.assertEqual(check_equation("E = m*v**1.5").status, MALFORMED)
+
 
 if __name__ == "__main__":
     unittest.main()
